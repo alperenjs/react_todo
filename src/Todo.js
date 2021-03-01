@@ -16,7 +16,8 @@ function Todo(props) {
             Delete
           </button>
         </div>
-        <div>🧭time</div>
+        <div>🧭 {props.todo.time}</div>
+        {console.log(props.todo)}
       </li>
     </div>
   );

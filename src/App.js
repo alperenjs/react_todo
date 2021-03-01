@@ -16,17 +16,24 @@ function App() {
       .onSnapshot((snapshot) => {
         // when todos change this fires
         setTodos(
-          snapshot.docs.map((doc) => ({ id: doc.id, todo: doc.data().todo }))
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            time: doc.data().time,
+            todo: doc.data().todo,
+          }))
         );
       });
   }, []);
 
   const addTodo = (event) => {
     event.preventDefault();
-
+    let [hour, minute, second] = new Date()
+      .toLocaleTimeString("en-US")
+      .split(/:| /);
     db.collection("todos").add({
       todo: input,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      time: hour + ":" + minute + ":" + second,
     });
 
     setInput(""); //clear after add todo
