@@ -15,7 +15,9 @@ function App() {
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         // when todos change this fires
-        setTodos(snapshot.docs.map((doc) => doc.data().todo));
+        setTodos(
+          snapshot.docs.map((doc) => ({ id: doc.id, todo: doc.data().todo }))
+        );
       });
   }, []);
 
@@ -52,7 +54,7 @@ function App() {
       </form>
       <ul className="list-group">
         {todos.map((todo) => (
-          <Todo text={todo} />
+          <Todo todo={todo} />
         ))}
       </ul>
     </div>
